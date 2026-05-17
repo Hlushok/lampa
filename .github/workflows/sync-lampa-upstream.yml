@@ -1,0 +1,46 @@
+name: Sync Lampa upstream
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 3 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: lampa-web
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/Siaivo/siaivo.github.io.git
+          git fetch upstream main
+
+      - name: Merge upstream main
+        run: git merge --no-edit upstream/main
+
+      - name: Reapply Lampa UA customizations
+        run: node scripts/apply-lampaua-customizations.mjs
+
+      - name: Commit customizations when needed
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git add app.min.js css/app.css
+            git commit -m "Apply Lampa UA customizations"
+          fi
+
+      - name: Push updated fork
+        run: git push origin lampa-web

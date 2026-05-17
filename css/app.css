@@ -9509,6 +9509,15 @@ body.platform--netcast .torrent-item__ffprobe > div::before {
 .about small {
   font-weight: 400;
 }
+.about__brand {
+  padding: 0.8em 1em;
+  border-left: 0.18em solid #e94b5f;
+  background: rgba(255, 255, 255, 0.06);
+}
+.about__brand span {
+  display: block;
+  max-width: 100%;
+}
 .about__contacts {
   padding-top: 1em;
   display: -webkit-box;
