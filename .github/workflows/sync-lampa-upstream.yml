@@ -46,6 +46,29 @@ jobs:
       - name: Push updated fork
         run: git push origin lampa-web
 
+      - name: Close failure issue after successful sync
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_TITLE: "Sync Lampa upstream failed"
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          existing_issue="$(gh issue list \
+            --repo "${GITHUB_REPOSITORY}" \
+            --state open \
+            --search "${ISSUE_TITLE} in:title" \
+            --json number \
+            --jq '.[0].number // empty')"
+
+          if [ -n "${existing_issue}" ]; then
+            gh issue comment "${existing_issue}" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --body "Наступна синхронізація пройшла успішно: ${RUN_URL}"
+            gh issue close "${existing_issue}" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --comment "Закриваю, бо sync з upstream знову проходить успішно."
+          fi
+
       - name: Create or update failure issue
         if: failure()
         env:
