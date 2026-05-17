@@ -36,10 +36,13 @@ jobs:
       - name: Reapply Lampa UA customizations
         run: node scripts/apply-lampaua-customizations.mjs
 
+      - name: Check Ukrainian localization
+        run: node scripts/check-ukrainian-localization.mjs
+
       - name: Commit customizations when needed
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            git add app.min.js css/app.css
+            git add app.min.js css/app.css lang/uk.js scripts/apply-lampaua-customizations.mjs scripts/check-ukrainian-localization.mjs
             git commit -m "Apply Lampa UA customizations"
           fi
 
