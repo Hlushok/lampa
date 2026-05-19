@@ -48,11 +48,24 @@
 
             if (!welcome || !backgrounds.length) return
 
+            var logo = welcome.querySelector('.welcome__logo')
+            if (!logo) {
+                logo = document.createElement('img')
+                logo.className = 'welcome__logo'
+                logo.src = 'img/logo-icon.svg'
+                logo.alt = ''
+                logo.setAttribute('aria-hidden', 'true')
+                logo.style.cssText =
+                    'position:absolute;left:50%;top:50%;width:10em;max-width:24vw;height:auto;transform:translate(-50%,-50%);pointer-events:none;display:none;'
+                welcome.appendChild(logo)
+            }
+
             var selected = backgrounds[Math.floor(Math.random() * backgrounds.length)]
             var image = new Image()
 
             image.onload = function () {
                 welcome.style.backgroundImage = 'url("' + selected + '")'
+                logo.style.display = 'block'
             }
 
             image.src = selected
