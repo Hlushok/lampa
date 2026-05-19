@@ -35,6 +35,29 @@
     </script>
 
     <div class="welcome"></div>
+    <script>
+        ;(function () {
+            var welcome = document.querySelector('.welcome')
+            var backgrounds = [
+                'img/welcome/welcome-1.jpg',
+                'img/welcome/welcome-2.jpg',
+                'img/welcome/welcome-3.jpg',
+                'img/welcome/welcome-4.jpg',
+                'img/welcome/welcome-5.jpg'
+            ]
+
+            if (!welcome || !backgrounds.length) return
+
+            var selected = backgrounds[Math.floor(Math.random() * backgrounds.length)]
+            var image = new Image()
+
+            image.onload = function () {
+                welcome.style.backgroundImage = 'url("' + selected + '")'
+            }
+
+            image.src = selected
+        })()
+    </script>
 
     <div id="app">
 

@@ -219,8 +219,52 @@ function applyUkrainianLangPolish() {
   writeIfChanged(path, source);
 }
 
+function applyWelcomeBackgroundRotation() {
+  const path = 'index.html';
+  let source = readFileSync(path, utf8);
+
+  const scriptBlock = String.raw`    <script>
+        ;(function () {
+            var welcome = document.querySelector('.welcome')
+            var backgrounds = [
+                'img/welcome/welcome-1.jpg',
+                'img/welcome/welcome-2.jpg',
+                'img/welcome/welcome-3.jpg',
+                'img/welcome/welcome-4.jpg',
+                'img/welcome/welcome-5.jpg'
+            ]
+
+            if (!welcome || !backgrounds.length) return
+
+            var selected = backgrounds[Math.floor(Math.random() * backgrounds.length)]
+            var image = new Image()
+
+            image.onload = function () {
+                welcome.style.backgroundImage = 'url("' + selected + '")'
+            }
+
+            image.src = selected
+        })()
+    </script>`;
+
+  source = source.replace(
+    new RegExp(String.raw`\s*<script>\s*;\(function \(\) \{\s*var welcome = document\.querySelector\('\.welcome'\)[\s\S]*?image\.src = selected\s*\}\)\(\)\s*</script>`, 'g'),
+    ''
+  );
+
+  const anchor = '    <div class="welcome"></div>';
+  if (!source.includes(anchor)) {
+    throw new Error('Could not find the welcome element in index.html');
+  }
+
+  source = source.replace(anchor, `${anchor}\n${scriptBlock}`);
+
+  writeIfChanged(path, source);
+}
+
 applyAboutBranding();
 applyAboutBrandingStyles();
 applyUkrainianDefaults();
 applyUkrainianLangPolish();
+applyWelcomeBackgroundRotation();
 console.log('Applied Lampa UA Ukrainian customizations.');
