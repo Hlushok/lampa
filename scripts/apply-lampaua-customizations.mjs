@@ -231,7 +231,8 @@ function applyWelcomeBackgroundRotation() {
                 'img/welcome/welcome-2.jpg',
                 'img/welcome/welcome-3.jpg',
                 'img/welcome/welcome-4.jpg',
-                'img/welcome/welcome-5.jpg'
+                'img/welcome/welcome-5.jpg',
+                'img/welcome/welcome-6-ukraine.jpg'
             ]
 
             if (!welcome || !backgrounds.length) return
