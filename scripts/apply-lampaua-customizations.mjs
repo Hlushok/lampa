@@ -225,6 +225,107 @@ function applyUkrainianLangPolish() {
   writeIfChanged(path, source);
 }
 
+function applyLoadingProgressTranslations() {
+  const path = 'app.min.js';
+  let source = readFileSync(path, utf8);
+  const replacements = [
+    ['Bookmarks start sync', 'Синхронізація закладок'],
+    ['Bookmarks loading full dump', 'Завантаження закладок'],
+    ['Bookmarks parsing dump', 'Обробка закладок'],
+    ['Bookmarks no dump load, trying cache', 'Пробуємо кеш закладок'],
+    ['Bookmarks load from cache', 'Завантаження закладок з кешу'],
+    ['Bookmarks loading changelog', 'Завантаження змін закладок'],
+    ['Bookmarks applying changelog', 'Застосування змін закладок'],
+    ['Platform init', 'Підготовка платформи'],
+    ['DeviceInput init', 'Підготовка керування'],
+    ['Params init', 'Підготовка параметрів'],
+    ['Controller observe init', 'Підготовка контролера'],
+    ['Console init', 'Підготовка консолі'],
+    ['Keypad init', 'Підготовка клавіатури'],
+    ['Layer init', 'Підготовка інтерфейсу'],
+    ['Subscribe on keydown', 'Підготовка натискань'],
+    ['Loaded styles', 'Стилі завантажено'],
+    ['Prepare ready', 'Підготовка завершена'],
+    ['Launching the application', 'Запуск застосунку'],
+    ['Timer init', 'Підготовка таймера'],
+    ['Storage init', 'Підготовка сховища'],
+    ['Timeline init', 'Підготовка історії'],
+    ['HTTPS init', 'Підготовка HTTPS'],
+    ['Mirrors init', 'Підготовка дзеркал'],
+    ['Personal init', 'Підготовка профілю'],
+    ['Head init', 'Підготовка сторінки'],
+    ['Settings init', 'Підготовка налаштувань'],
+    ['Select init', 'Підготовка вибору'],
+    ['Favorite init', 'Підготовка обраного'],
+    ['Background init', 'Підготовка фону'],
+    ['Markers init', 'Підготовка міток'],
+    ['Notice init', 'Підготовка сповіщень'],
+    ['Bell init', 'Підготовка дзвінка'],
+    ['Menu init', 'Підготовка меню'],
+    ['Activity init', 'Підготовка активності'],
+    ['Screensaver init', 'Підготовка заставки'],
+    ['Socket init', 'Підготовка з’єднання'],
+    ['Account init', 'Підготовка акаунта'],
+    ['Extensions init', 'Підготовка розширень'],
+    ['Plugins init', 'Підготовка плагінів'],
+    ['Recomends init', 'Підготовка рекомендацій'],
+    ['Timetable init', 'Підготовка розкладу'],
+    ['Helper init', 'Підготовка помічника'],
+    ['Tizen init', 'Підготовка Tizen'],
+    ['Player init', 'Підготовка плеєра'],
+    ['Iframe init', 'Підготовка iframe'],
+    ['Parser init', 'Підготовка парсера'],
+    ['WebOSLauncher init', 'Підготовка WebOS'],
+    ['Theme init', 'Підготовка теми'],
+    ['AdManager init', 'Підготовка реклами'],
+    ['NavigationBar init', 'Підготовка навігації'],
+    ['Demo init', 'Підготовка демо'],
+    ['Speedtest init', 'Підготовка тесту швидкості'],
+    ['Processing init', 'Підготовка обробки'],
+    ['ParentalControl init', 'Підготовка батьківського контролю'],
+    ['Android init', 'Підготовка Android'],
+    ['Sound init', 'Підготовка звуку'],
+    ['Iptv init', 'Підготовка IPTV'],
+    ['Logs init', 'Підготовка журналів'],
+    ['Broadcast init', 'Підготовка трансляції'],
+    ['Search init', 'Підготовка пошуку'],
+    ['DataBase init', 'Підготовка бази даних'],
+    ['ContentRows init', 'Підготовка рядків контенту'],
+    ['Initialization successful', 'Ініціалізація успішна'],
+    ['Render app', 'Відображення застосунку'],
+    ['ServiceDeveloper init', 'Підготовка сервісу розробника'],
+    ['ServiceTorserver init', 'Підготовка TorrServer'],
+    ['ServiceWatched init', 'Підготовка переглядів'],
+    ['ServiceSettings init', 'Підготовка сервісу налаштувань'],
+    ['ServiceMetric init', 'Підготовка метрик'],
+    ['ServiceRemoteFavorites init', 'Підготовка віддаленого обраного'],
+    ['ServiceDMCA init', 'Підготовка DMCA'],
+    ['ServiceFPS init', 'Підготовка FPS'],
+    ['ServiceEvents init', 'Підготовка подій'],
+    ['ServiceLibs init', 'Підготовка бібліотек'],
+    ['ServiceLGBT init', 'Підготовка сервісу LGBT'],
+    ['ServiceChildren init', 'Підготовка дитячого режиму'],
+    ['ServiceRemoteConfiguration init', 'Підготовка віддаленої конфігурації'],
+    ['Layer update', 'Оновлення інтерфейсу'],
+    ['Send app ready', 'Застосунок майже готовий'],
+    ['Show app', 'Показ застосунку'],
+    ['Open cache database', 'Відкриття кешу'],
+    ['Storage load reserve', 'Завантаження резерву сховища'],
+    ['Mirrors initialization', 'Ініціалізація дзеркал'],
+    ['Plugins initialization', 'Ініціалізація плагінів'],
+    ['Proxy initialization', 'Ініціалізація проксі'],
+    ['Account initialization', 'Ініціалізація акаунта'],
+    ['Loading plugins', 'Завантаження плагінів'],
+    ['Loading language', 'Завантаження мови'],
+  ];
+
+  for (const [search, replacement] of replacements) {
+    source = replaceAll(source, `LoadingProgress.status('${search}')`, `LoadingProgress.status('${replacement}')`);
+  }
+
+  writeIfChanged(path, source);
+}
+
 function applyWelcomeBackgroundRotation() {
   const path = 'index.html';
   let source = readFileSync(path, utf8);
@@ -291,5 +392,6 @@ applyAboutBranding();
 applyAboutBrandingStyles();
 applyUkrainianDefaults();
 applyUkrainianLangPolish();
+applyLoadingProgressTranslations();
 applyWelcomeBackgroundRotation();
 console.log('Applied Lampa UA Ukrainian customizations.');

@@ -51,6 +51,21 @@ for (const phrase of forbiddenPhrases) {
   }
 }
 
+const forbiddenLoadingStatuses = [
+  'Prepare ready',
+  'Launching the application',
+  'Send app ready',
+  'Show app',
+  'Loading plugins',
+  'Loading language',
+];
+
+for (const status of forbiddenLoadingStatuses) {
+  if (app.includes(`LoadingProgress.status('${status}')`)) {
+    errors.push(`app.min.js still contains English loading status: ${status}`);
+  }
+}
+
 const requiredAppSnippets = [
   "Storage.set('language', 'uk', true);",
   "Storage.set('tmdb_lang', 'uk', true);",
@@ -59,6 +74,7 @@ const requiredAppSnippets = [
   'Наша копія',
   'Про Lampa UA',
   "DEFAULT_REGION_CODE = 'ua'",
+  'Застосунок майже готовий',
 ];
 
 for (const snippet of requiredAppSnippets) {
