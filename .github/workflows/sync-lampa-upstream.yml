@@ -45,7 +45,7 @@ jobs:
       - name: Commit customizations when needed
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            git add app.min.js css/app.css lang/uk.js scripts/apply-lampaua-customizations.mjs scripts/check-ukrainian-localization.mjs
+            git add index.html app.min.js css/app.css lang/uk.js img/welcome scripts/apply-lampaua-customizations.mjs scripts/check-ukrainian-localization.mjs
             git commit -m "Apply Lampa UA customizations"
           fi
 
