@@ -1,25 +1,6 @@
 {
-  "name": "LampaUa",
-  "type": "list",
-  "headline": "LampaUa",
-  "version": "1.0.0",
-  "parameter": "content:{PREFIX}{domain}/msx/start.json",
-  "action": "[settings:validate_links:0|home]",
-  "template": {
-    "type": "separate",
-    "layout": "0,0,2,3",
-    "color": "msx-glass"
-  },
-  "items": [
-    {
-      "title": "LampaUa",
-      "image": "{PREFIX}{domain}/msx-logo.png",
-      "action": "link:{PREFIX}{domain}/index.html"
-    },
-    {
-      "title": "SiSi",
-      "image": "{PREFIX}{domain}/../sisi/msx-logo.png",
-      "action": "content:{PREFIX}{domain}/../sisi?initial=msx"
-    }
-  ]
+	"name": "LampaUa",
+	"version": "latest",
+	"parameter": "content:{PREFIX}{domain}/msx/start.json",
+	"action": "link:{PREFIX}{domain}"
 }
