@@ -183,6 +183,12 @@ function applyUkrainianDefaults() {
   );
   source = replaceRequired(
     source,
+    "'&language=' + Storage.get('language', 'ru') + '&api_key='",
+    "'&language=' + Storage.get('language', 'uk') + '&api_key='",
+    'TMDB images API language fallback'
+  );
+  source = replaceRequired(
+    source,
     "Lang.codes()[Storage.get('language', 'ru')]",
     "Lang.codes()[Storage.get('language', 'uk')]",
     'settings language label fallback'
