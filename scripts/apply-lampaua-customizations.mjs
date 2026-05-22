@@ -324,6 +324,23 @@ function applyLoadingProgressTranslations() {
   writeIfChanged(path, source);
 }
 
+function disableUpstreamWelcomeIntro() {
+  const path = 'app.min.js';
+  let source = readFileSync(path, utf8);
+  const disabledMarker = '/* Lampa UA: keep rotating welcome backgrounds from index.html instead of upstream intro. */';
+
+  if (!source.includes(disabledMarker)) {
+    source = replaceRequired(
+      source,
+      "document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', boot) : boot();",
+      disabledMarker,
+      'upstream welcome intro boot'
+    );
+  }
+
+  writeIfChanged(path, source);
+}
+
 function applyWelcomeBackgroundRotation() {
   const path = 'index.html';
   let source = readFileSync(path, utf8);
@@ -347,16 +364,30 @@ function applyWelcomeBackgroundRotation() {
 
             if (!welcome || !backgrounds.length) return
 
-            var logo = welcome.querySelector('.welcome__logo')
-            if (!logo) {
-                logo = document.createElement('img')
-                logo.className = 'welcome__logo'
-                logo.src = 'img/logo-icon.svg'
-                logo.alt = ''
-                logo.setAttribute('aria-hidden', 'true')
-                logo.style.cssText =
-                    'position:absolute;left:50%;top:50%;width:10em;max-width:24vw;height:auto;transform:translate(-50%,-50%);pointer-events:none;display:none;'
-                welcome.appendChild(logo)
+            var oldLogo = welcome.querySelector('.welcome__logo')
+            if (oldLogo) oldLogo.remove()
+
+            var style = document.getElementById('lampaua-welcome-style')
+            if (!style) {
+                style = document.createElement('style')
+                style.id = 'lampaua-welcome-style'
+                style.textContent =
+                    '.welcome{background-color:#03050a!important;background-size:cover!important;background-position:center!important;overflow:hidden;}' +
+                    '.welcome:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 50% 45%,rgba(31,118,204,.22),transparent 26%),linear-gradient(90deg,rgba(0,0,0,.9),rgba(3,5,10,.5) 35%,rgba(3,5,10,.56) 65%,rgba(0,0,0,.92)),linear-gradient(180deg,rgba(0,0,0,.82),rgba(0,0,0,.3) 42%,rgba(0,0,0,.88));}' +
+                    '.welcome:after{content:"";position:absolute;inset:-20%;z-index:1;pointer-events:none;background:linear-gradient(108deg,transparent 0 47%,rgba(255,216,0,.5) 49%,rgba(38,139,255,.52) 50%,transparent 53%),linear-gradient(90deg,transparent 0 30%,rgba(38,139,255,.24) 30.2%,transparent 30.55%,transparent 68%,rgba(255,216,0,.2) 68.2%,transparent 68.55%);opacity:.7;animation:lampauaLines 5.5s ease-in-out infinite alternate;}' +
+                    '.welcome__lampaua-intro{position:absolute;left:50%;top:43%;z-index:2;transform:translate(-50%,-50%);font-family:Arial Black,Segoe UI,sans-serif;font-size:min(12vw,8.8em);font-weight:900;letter-spacing:.12em;text-transform:uppercase;line-height:1;color:#ffd800;text-shadow:-.045em 0 0 rgba(38,139,255,.9),0 0 .45em rgba(0,0,0,.85);pointer-events:none;user-select:none;opacity:.92;animation:lampauaTitle 3.8s ease-in-out infinite;}' +
+                    '.welcome__lampaua-intro span{color:#268bff;text-shadow:.045em 0 0 rgba(255,216,0,.88),0 0 .45em rgba(0,0,0,.85);}' +
+                    '@keyframes lampauaTitle{0%{opacity:.66;transform:translate(-50%,-50%) scale(.985)}45%{opacity:.96;transform:translate(-50%,-50%) scale(1.015)}100%{opacity:.78;transform:translate(-50%,-50%) scale(1)}}' +
+                    '@keyframes lampauaLines{0%{transform:translate3d(-1.5%,0,0)}100%{transform:translate3d(1.5%,0,0)}}'
+                document.head.appendChild(style)
+            }
+
+            var brand = welcome.querySelector('.welcome__lampaua-intro')
+            if (!brand) {
+                brand = document.createElement('div')
+                brand.className = 'welcome__lampaua-intro'
+                brand.innerHTML = 'Lampa<span>Ua</span>'
+                welcome.appendChild(brand)
             }
 
             var selected = backgrounds[Math.floor(Math.random() * backgrounds.length)]
@@ -364,7 +395,6 @@ function applyWelcomeBackgroundRotation() {
 
             image.onload = function () {
                 welcome.style.backgroundImage = 'url("' + selected + '")'
-                logo.style.display = 'block'
             }
 
             image.src = selected
@@ -391,5 +421,6 @@ applyAboutBrandingStyles();
 applyUkrainianDefaults();
 applyUkrainianLangPolish();
 applyLoadingProgressTranslations();
+disableUpstreamWelcomeIntro();
 applyWelcomeBackgroundRotation();
 console.log('Applied Lampa UA Ukrainian customizations.');
