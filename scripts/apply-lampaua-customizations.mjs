@@ -194,7 +194,7 @@ function applyUkrainianDefaults() {
     'settings language label fallback'
   );
 
-  const loadAppAnchor = "    prepareApp(); // ";
+  const loadAppAnchor = /^(\s*prepareApp\(\);\s*\/\/.*)$/m;
   const defaultsBlock = String.raw`
     if (!window.localStorage.getItem('language') && window.lampa_settings.lang_use) {
       Storage.set('language', 'uk', true);
@@ -204,13 +204,11 @@ function applyUkrainianDefaults() {
 `;
 
   if (!source.includes("Storage.set('language', 'uk', true);")) {
-    const anchorIndex = source.indexOf(loadAppAnchor);
-    if (anchorIndex === -1) {
+    if (!loadAppAnchor.test(source)) {
       throw new Error('Could not find loadApp prepareApp anchor');
     }
 
-    const lineEnd = source.indexOf('\n', anchorIndex);
-    source = source.slice(0, lineEnd + 1) + defaultsBlock + source.slice(lineEnd + 1);
+    source = source.replace(loadAppAnchor, `$1${defaultsBlock}`);
   }
 
   source = polishUkrainianText(source);
