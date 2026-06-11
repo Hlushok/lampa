@@ -9529,37 +9529,6 @@ body.platform--netcast .torrent-item__ffprobe > div::before {
 .about small {
   font-weight: 400;
 }
-.about__brand {
-  padding: 0.8em 1em;
-  border-left: 0.18em solid #e94b5f;
-  background: rgba(255, 255, 255, 0.06);
-  margin-bottom: 1em;
-}
-.about__brand span {
-  display: block;
-  max-width: 100%;
-}
-.about__ua-panel {
-  padding: 1em;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
-  margin-bottom: 1.3em;
-}
-.about__ua-panel h3 {
-  margin: 0 0 0.55em;
-  font-size: 1.15em;
-  font-weight: 600;
-}
-.about__ua-panel p {
-  margin: 0 0 0.75em;
-}
-.about__ua-panel ul {
-  margin: 0;
-  padding-left: 1.2em;
-}
-.about__ua-panel li {
-  margin: 0.3em 0;
-}
 .about__contacts {
   padding-top: 1em;
   display: -webkit-box;
