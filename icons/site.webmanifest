@@ -1,6 +1,13 @@
 {
-    "name": "",
-    "short_name": "",
+    "id": "../",
+    "name": "LampaUa",
+    "short_name": "LampaUa",
+    "description": "Український каталог фільмів і серіалів",
+    "lang": "uk",
+    "start_url": "../index.html",
+    "scope": "../",
+    "display": "standalone",
+    "orientation": "any",
     "icons": [
         {
             "src": "android-chrome-192x192.png",
@@ -11,9 +18,13 @@
             "src": "android-chrome-384x384.png",
             "sizes": "384x384",
             "type": "image/png"
+        },
+        {
+            "src": "../img/icons/android/android-launchericon-512-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
         }
     ],
     "theme_color": "#1d1f20",
-    "background_color": "#1d1f20",
-    "display": "standalone"
+    "background_color": "#1d1f20"
 }
