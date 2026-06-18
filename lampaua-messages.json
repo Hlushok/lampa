@@ -9,7 +9,6 @@
     "animation": "sparkle",
     "days_before": 0,
     "days_after": 2,
-    "priority": 500,
     "enabled": true
   },
   {
@@ -22,7 +21,6 @@
     "animation": "sparkle",
     "days_before": 2,
     "days_after": 1,
-    "priority": 150,
     "enabled": false
   },
   {
@@ -35,7 +33,6 @@
     "animation": "pulse",
     "days_before": 1,
     "days_after": 0,
-    "priority": 300,
     "enabled": false
   },
   {
@@ -48,7 +45,6 @@
     "animation": "pulse",
     "days_before": 0,
     "days_after": 1,
-    "priority": 500,
     "enabled": false
   },
   {
@@ -61,7 +57,6 @@
     "animation": "float",
     "days_before": 1,
     "days_after": 1,
-    "priority": 120,
     "enabled": false
   },
   {
@@ -74,7 +69,6 @@
     "animation": "sparkle",
     "days_before": 3,
     "days_after": 1,
-    "priority": 400,
     "enabled": false
   }
 ]
